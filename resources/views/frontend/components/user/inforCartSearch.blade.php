@@ -1,0 +1,86 @@
+@extends('frontend.layouts.master')
+
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assetFE/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assetFE/assets/styles/categories_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assetFE/assets/styles/categories_responsive.css') }}">
+@endsection
+
+@section('js')
+    <script src="{{ asset('assetFE/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assetFE/assets/js/categories_custom.js') }}"></script>
+@endsection
+
+@section('content')
+    <section style="background-color: #eee; margin-top: 10%;">
+        <div class="container py-5">
+            <div class="row card">
+                <div class="card-body">
+                    <h4 class="card-title">Show Order Result</h4>
+                
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Phone</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Create</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if ($orders->count())
+                                @foreach ($orders as $order)
+                                    <tr>
+                                        <td>{{$order->phone}}</td>
+                                        <td>{{number_format($order->total)}} VND</td>
+                                        @switch($order->status)
+                                            @case("process")
+                                                <td>
+                                                    <label class="badge badge-warning" style="font-size: 17px;">{{$order->status}}</label>
+                                                </td>
+                                                @break
+                                            @case("shipping")
+                                                <td>
+                                                    <label class="badge badge-info" style="font-size: 17px;">{{$order->status}}</label>
+                                                </td>
+                                                @break
+                                            @case("success")
+                                                <td>
+                                                    <label class="badge badge-success" style="font-size: 17px;">{{$order->status}}</label>
+                                                </td>
+                                                @break
+                                            @case("cancel")
+                                                <td>
+                                                    <label class="badge badge-danger" style="font-size: 17px;">{{$order->status}}</label>
+                                                </td>
+                                                @break
+                                            @default
+                                                
+                                        @endswitch
+                                        
+                                        <td>{{formatDateFromUserTable($order->created_at)}}</td>
+                                        <td class="parent">
+                                            <a href="{{ route('customer.infoCartDetail', $order->id) }}">
+                                                <button type="button" class="btn btn-lg btn-info" style="width: 48px; cursor: pointer;"><i class="fa fa-info"></i></button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5">There are no record.</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 margin-paginate-slider-index">
+                            {{-- {{$orders->links()}} --}}
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+@endsection
