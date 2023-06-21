@@ -83,7 +83,7 @@ Pet Order Show Admin
 
                                 <?php endswitch; ?>
 
-                                <td><?php echo e(formatDateFromUserTable($order->created_at)); ?></td>
+                                <td><?php echo e(($order->created_at)); ?></td>
                                 <td class="parent">
                                     <a href="<?php echo e(route('order.show', $order->id)); ?>">
                                         <button type="button" class="btn btn-social-icon btn-info"><i class="ti-info"></i></button>

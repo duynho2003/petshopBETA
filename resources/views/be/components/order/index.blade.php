@@ -85,7 +85,7 @@ Pet Order Show Admin
 
                                 @endswitch
 
-                                <td>{{formatDateFromUserTable($order->created_at)}}</td>
+                                <td>{{($order->created_at)}}</td>
                                 <td class="parent">
                                     <a href="{{ route('order.show', $order->id) }}">
                                         <button type="button" class="btn btn-social-icon btn-info"><i class="ti-info"></i></button>
